@@ -26,6 +26,13 @@ public class BaseDeCalculo {
 		simulador.cadastrarDeducao("Previdencia Privada", 3000f);
 		assertEquals(7000f, simulador.getBaseDeCalculo(), 0.1f);
 	}
+	
+	@Test
+	public void testeOutraBaseDeCalculo() throws DescricaoEmBrancoException, ValorDeducaoInvalidoException, ValorRendimentoInvalidoException, NomeEmBrancoException {
+		simulador.cadastrarRendimento("Salario", 10000f);
+		simulador.cadastrarDeducao("Previdencia Privada", 5000f);
+		assertEquals(5000f, simulador.getBaseDeCalculo(), 0.1f);
+	}
 
 
 }

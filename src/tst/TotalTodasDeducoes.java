@@ -26,5 +26,12 @@ public class TotalTodasDeducoes {
 		simulador.cadastrarDeducao("Previdencia Privada", 3000f);
 		assertEquals(3000f, simulador.getTotalTodasDeducoes(), 0.1f);
 	}
+	
+	@Test
+	public void testeOutroTotalDeducoes() throws DescricaoEmBrancoException, ValorDeducaoInvalidoException, ValorRendimentoInvalidoException, NomeEmBrancoException {
+		simulador.cadastrarRendimento("Salario", 10000f);
+		simulador.cadastrarDeducao("Previdencia Privada", 5000f);
+		assertEquals(5000f, simulador.getTotalTodasDeducoes(), 0.1f);
+	}
 
 }

@@ -34,5 +34,10 @@ public class ValorImposto {
 		assertEquals(1055.64f, simulador.getValorImposto(), 0.1f);
 	}
 
-
+	@Test
+	public void testeOutroValorImposto() throws DescricaoEmBrancoException, ValorRendimentoInvalidoException, ValorDeducaoInvalidoException, NomeEmBrancoException {
+		simulador.cadastrarRendimento("Salario", 10000f);
+		simulador.cadastrarDeducao("Previdencia Privada", 5000f);
+		assertEquals(505.64f, simulador.getValorImposto(), 0.1f);
+	}
 }

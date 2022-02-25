@@ -182,21 +182,87 @@ public class SimuladorIRPF {
 	}
 	
 	public float getTotalTodasDeducoes() {
-		return 3000f; // por falsificacao
+		float soma = 0;
+		float dependentes = 0;
+		float totalDeducoes = 0;
+		
+		for (float f : valorDeducao) {
+			soma += f;
+		}
+		for (float f : valorContribuicaoPrevidenciaria) {
+			soma += f;
+		}
+		for (float f : valorPensaoAlimenticia) {
+			soma += f;
+		}
+		for (int i=0; i<dataNascimento.length; i++) {
+			dependentes += 1;
+		}
+		
+		dependentes *= 189.59;
+		
+		totalDeducoes = dependentes + soma;
+		
+		return totalDeducoes;
 	}
 
 	public float getBaseDeCalculo() {
-		return 7000f; // por falsificacao
+		baseDeCalculo = 0;
+		
+		baseDeCalculo = totalRendimentos - getTotalTodasDeducoes();
+		
+		return baseDeCalculo;
 	}
-
+	
 	public float getValorImpostoFaixaUm() {
-		return 0f; // por falsificacao
+		return 0f; // valor sempre sera 0
 	}
 	
 	public double getValorImposto() {
-		return 1055.64f; // por falsificacao
+		double valorBase = getBaseDeCalculo();
+		double imposto = 0;
+		double faixa1 = 1903.98;
+		double faixa2 = 922.67;
+		double faixa3 = 924.40;
+		double faixa4 = 913.63;
+		
+		if (valorBase < 1903.99) {
+			return 0f;
+		}
+		else {
+			if (valorBase > 2826.65) {
+				imposto = imposto + faixa2*(7.5/100);
+				if (valorBase > 3751.05) {
+					imposto += 138.66;
+					if (valorBase > 4664.68) {
+						valorBase = valorBase - faixa1 - faixa2 - faixa3 - faixa4;
+						valorBase *= 0.275;
+						imposto = imposto + 205.5667 + valorBase; 
+					}
+					else {
+						faixa4 = valorBase - faixa1 - faixa2 - faixa3;
+						faixa4 *= 0.225;
+						imposto = imposto + faixa4;
+					}
+				}
+				else {
+					faixa3 = valorBase - faixa1 - faixa2;
+					faixa3 *= 0.15;
+					imposto = imposto + faixa3;
+				}
+			}
+			else {
+				faixa2 -= faixa1;
+				faixa2 *= 0.075;
+				imposto = imposto + faixa2;
+			}
+		}
+		return imposto;
 	}
+
 	public double getValorAliquota() {
-		return 0.1055f; //por falsificacao
+		double imposto = getValorImposto();
+		double rendimento = getTotalRendimentos();
+		return imposto/rendimento;
 	}
 }

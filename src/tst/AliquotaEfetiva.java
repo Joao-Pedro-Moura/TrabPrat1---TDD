@@ -26,5 +26,12 @@ public class AliquotaEfetiva {
 		simulador.cadastrarDeducao("Previdencia Privada", 3000f);
 		assertEquals(0.1055f, simulador.getValorAliquota(), 0.1f);
 	}
+	
+	@Test
+	public void testeValorOutraAliquotaEfetiva() throws DescricaoEmBrancoException, ValorRendimentoInvalidoException, ValorDeducaoInvalidoException, NomeEmBrancoException {
+		simulador.cadastrarRendimento("Salario", 10000f);
+		simulador.cadastrarDeducao("Previdencia Privada", 5000f);
+		assertEquals(0.0505f, simulador.getValorAliquota(), 0.1f);
+	}
 
 }
