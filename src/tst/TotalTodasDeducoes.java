@@ -28,10 +28,31 @@ public class TotalTodasDeducoes {
 	}
 	
 	@Test
-	public void testeOutroTotalDeducoes() throws DescricaoEmBrancoException, ValorDeducaoInvalidoException, ValorRendimentoInvalidoException, NomeEmBrancoException {
+	public void testeOutroTotalDeducoes() throws DescricaoEmBrancoException, ValorRendimentoInvalidoException, ValorDeducaoInvalidoException, NomeEmBrancoException {
 		simulador.cadastrarRendimento("Salario", 10000f);
-		simulador.cadastrarDeducao("Previdencia Privada", 5000f);
+		simulador.cadastrarDeducao("Previdencia Privada", 500f);
+		simulador.cadastrarDeducao("Funpresp", 700f);
+		simulador.cadastrarContribuicaoPrevidenciaria("INSS", 800f);
+		simulador.cadastrarContribuicaoPrevidenciaria("Contracheque", 1200f);
+		simulador.cadastrarPensaoAlimenticia(1300f);
+		simulador.cadastrarPensaoAlimenticia(120.82f);
+		simulador.cadastrarDependente("joao", 170698f);
+		simulador.cadastrarDependente("Marcos", 260898f);
 		assertEquals(5000f, simulador.getTotalTodasDeducoes(), 0.1f);
+	}
+	
+	@Test
+	public void testeTerceiroTotalDeducoes() throws DescricaoEmBrancoException, ValorRendimentoInvalidoException, ValorDeducaoInvalidoException, NomeEmBrancoException {
+		simulador.cadastrarRendimento("Salario", 10000f);
+		simulador.cadastrarDeducao("Previdencia Privada", 1000f);
+		simulador.cadastrarDeducao("Funpresp", 1200f);
+		simulador.cadastrarContribuicaoPrevidenciaria("INSS", 800f);
+		simulador.cadastrarContribuicaoPrevidenciaria("Contracheque", 1200f);
+		simulador.cadastrarPensaoAlimenticia(1300f);
+		simulador.cadastrarPensaoAlimenticia(120.82f);
+		simulador.cadastrarDependente("joao", 170698f);
+		simulador.cadastrarDependente("Marcos", 260898f);
+		assertEquals(6000f, simulador.getTotalTodasDeducoes(), 0.1f);
 	}
 
 }
