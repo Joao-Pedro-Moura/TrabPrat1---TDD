@@ -15,7 +15,7 @@ import app.DescricaoEmBrancoException;
 import app.SimuladorIRPF;
 import app.ValorRendimentoInvalidoException;
 
-// @RunWith(Parameterized.class)
+@RunWith(Parameterized.class)
 public class CadastroRendimentosTeste {
 
 	SimuladorIRPF simulador;
@@ -27,45 +27,40 @@ public class CadastroRendimentosTeste {
 		simulador = new SimuladorIRPF();
 	}
 	
-//	public CadastroRendimentosTeste(Object[][] rendimentos, float valorEsperado) {
-//		this.rendimentos = rendimentos;
-//		this.valorEsperado = valorEsperado;
-//	}
+	public CadastroRendimentosTeste(Object[][] rendimentos, float valorEsperado) {
+		this.rendimentos = rendimentos;
+		this.valorEsperado = valorEsperado;
+	}
 	
-//	@Parameters
-//	public static Collection<Object[]> getParameters(){
-//		Object[][] respostas = new Object[][] {
-//			{new Object[][] {
-//				{"Salario", 10000f},
-//			}, 10000f},
-//			{new Object[][] {
-//				{"Salario", 8000f}, 
-//				{"Aluguel", 2000f}
-//			}, 10000f}, 
-//			{new Object[][] {
-//				{"Salario", 7000f}, 
-//				{"Aluguel", 2000f},
-//				{"Dividen", 1000f}
-//			}, 10000f}
-//		};
-//		
-//		return Arrays.asList(respostas);
-//	}
-//	
+	@Parameters
+	public static Collection<Object[]> getParameters(){
+		Object[][] respostas = new Object[][] {
+			{new Object[][] {
+				{"Salario", 10000f},
+			}, 10000f},
+			{new Object[][] {
+				{"Salario", 8000f}, 
+				{"Aluguel", 2000f}
+			}, 10000f}, 
+			{new Object[][] {
+				{"Salario", 7000f}, 
+				{"Aluguel", 2000f},
+				{"Dividen", 1000f}
+			}, 10000f}
+		};
+		
+		return Arrays.asList(respostas);
+	}
 	
-//	@Test
-//	public void testCadastroRendimentos() {
-//		for (Object[] o : rendimentos) {
-//			simulador.cadastrarRendimento((String)o[0], (float)o[1]);
-//		}
-//		assertEquals(valorEsperado, simulador.getTotalRendimentos(), 0f);
-//	}
 	
 	@Test
-	public void testeCadastraUmRendimento() throws DescricaoEmBrancoException, ValorRendimentoInvalidoException {
-		simulador.cadastrarRendimento("Salario", 10000f);
-		assertEquals(10000f, simulador.getTotalRendimentos(), 0f);
+	public void testCadastroRendimentos() throws DescricaoEmBrancoException, ValorRendimentoInvalidoException {
+		for (Object[] o : rendimentos) {
+			simulador.cadastrarRendimento((String)o[0], (float)o[1]);
+		}
+		assertEquals(valorEsperado, simulador.getTotalRendimentos(), 0f);
 	}
+	
 	
 	@Test(expected = DescricaoEmBrancoException.class)
 	public void testeCadastraRendimentoDescricaoEmBranco() throws DescricaoEmBrancoException, ValorRendimentoInvalidoException {
