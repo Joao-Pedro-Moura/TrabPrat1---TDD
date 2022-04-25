@@ -15,6 +15,9 @@ public class SimuladorIRPF {
 	private float[] dataNascimento;
 	private String[] nomeDependente;
 	private float baseDeCalculo;
+	private float soma;
+	private float dependentes;
+	private float totalDeducoes;
 	
 	public SimuladorIRPF() {
 		rendimentos = new LinkedList<Rendimento>();
@@ -72,11 +75,9 @@ public class SimuladorIRPF {
 
 	public float getTotalOutrasDeducoes() {
 		
-		float soma = 0;
+		soma = 0;
 		
-		for (float f : valorDeducao) {
-			soma += f;
-		}
+		somarValorDeducoesParaVariavelSoma();
 		
 		return soma;
 	}
@@ -108,11 +109,9 @@ public class SimuladorIRPF {
 	
 	public float getTotalContribuicao() {
 		
-		float soma = 0;
+		soma = 0;
 		
-		for (float f : valorContribuicaoPrevidenciaria) {
-			soma += f;
-		}
+		somarValorTotalContribuicaoPrevidenciariaParaVariavelSoma();
 		
 		return soma;
 	}
@@ -137,11 +136,9 @@ public class SimuladorIRPF {
 	
 	public float getTotalPensaoAlimenticia() {
 		
-		float soma = 0;
+		soma = 0;
 		
-		for (float f : valorPensaoAlimenticia) {
-			soma += f;
-		}
+		somarValorTotalPensaoAlimenticiaParaVariavelSoma();
 		
 		return soma;
 	}
@@ -170,7 +167,7 @@ public class SimuladorIRPF {
 	
 	public float getTotalDependentes() {
 		
-		float soma = 0;
+		soma = 0;
 		
 		for (int i=0; i<dataNascimento.length; i++) {
 			soma += 1;
@@ -182,28 +179,56 @@ public class SimuladorIRPF {
 	}
 	
 	public float getTotalTodasDeducoes() {
-		float soma = 0;
-		float dependentes = 0;
-		float totalDeducoes = 0;
+		inicializandoVariaveisComValorZero();
 		
-		for (float f : valorDeducao) {
-			soma += f;
-		}
-		for (float f : valorContribuicaoPrevidenciaria) {
-			soma += f;
-		}
-		for (float f : valorPensaoAlimenticia) {
-			soma += f;
-		}
+		somarValorDeducoesParaVariavelSoma();
+		somarValorTotalContribuicaoPrevidenciariaParaVariavelSoma();
+		somarValorTotalPensaoAlimenticiaParaVariavelSoma();
+		obterQuantidadeDependentes();
+		
+		obterValorTotalDependentes();
+		
+		obterValorTotalTodasDeducoes();
+		
+		return totalDeducoes;
+	}
+
+	private void obterValorTotalTodasDeducoes() {
+		totalDeducoes = dependentes + soma;
+	}
+
+	private void obterValorTotalDependentes() {
+		dependentes *= 189.59;
+	}
+
+	private void obterQuantidadeDependentes() {
 		for (int i=0; i<dataNascimento.length; i++) {
 			dependentes += 1;
 		}
-		
-		dependentes *= 189.59;
-		
-		totalDeducoes = dependentes + soma;
-		
-		return totalDeducoes;
+	}
+
+	private void somarValorTotalPensaoAlimenticiaParaVariavelSoma() {
+		for (float f : valorPensaoAlimenticia) {
+			soma += f;
+		}
+	}
+
+	private void somarValorTotalContribuicaoPrevidenciariaParaVariavelSoma() {
+		for (float f : valorContribuicaoPrevidenciaria) {
+			soma += f;
+		}
+	}
+
+	private void somarValorDeducoesParaVariavelSoma() {
+		for (float f : valorDeducao) {
+			soma += f;
+		}
+	}
+
+	private void inicializandoVariaveisComValorZero() {
+		soma = 0;
+		dependentes = 0;
+		totalDeducoes = 0;
 	}
 
 	public float getBaseDeCalculo() {
